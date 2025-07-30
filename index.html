@@ -10,15 +10,25 @@
     <h2>Webcam stream</h2>
 
     <button id="startButton">Start camera</button>
-    <video id="videoInput" width="640" height="480" autoplay muted></video>
+    <video
+      id="videoInput"
+      width="640"
+      height="480"
+      autoplay
+      muted
+      playsinline
+    ></video>
+
     <canvas id="canvasOutput" width="640" height="480"></canvas>
 
-    <script
+    <!--<script
       async
       src="https://docs.opencv.org/4.8.0/opencv.js"
       onload="onReady();"
       type="text/javascript"
-    ></script>
+    ></script> -->
+
+    <script async src="https://docs.opencv.org/4.8.0/opencv.js"></script>
     <script src="script3.js"></script>
   </body>
 </html>
