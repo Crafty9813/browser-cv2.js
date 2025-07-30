@@ -20,44 +20,47 @@ document.getElementById("startButton").addEventListener("click", () => {
 
   // Wait for data like video width, height, etc. to load
   video.onloadedmetadata = () => {
-    let canvas = document.getElementById("canvasOutput");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    function waitForVideoDimensions() {
+      if (video.videoWidth === 0 || video.videoHeight === 0) {
+        requestAnimationFrame(waitForVideoDimensions);
+        return;
+      }
 
-    streaming = true;
+      const width = video.videoWidth;
+      const height = video.videoHeight;
 
-    let width = video.videoWidth;
-    let height = video.videoHeight;
+      const canvas = document.getElementById("canvasOutput");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
-    // Set default to 640 x 480 px
-    if (!width || !height) {
-      width = 640;
-      height = 480;
+      streaming = true;
+
+      if (frame) frame.delete();
+
+      frame = new cv.Mat(height, width, cv.CV_8UC4);
+      cap = new cv.VideoCapture(video);
+
+      startVideoProcessing();
     }
-
-    frame = new cv.Mat(height, width, cv.CV_8UC4);
-    cap = new cv.VideoCapture(video);
-    startVideoProcessing();
+    waitForVideoDimensions();
   };
 });
 
 function startVideoProcessing() {
   function processVideo() {
     if (!streaming) {
-      frame.delete();
+      if (frame) frame.delete();
       return;
     }
 
     const videoWidth = video.videoWidth;
     const videoHeight = video.videoHeight;
+    const canvas = document.getElementById("canvasOutput");
 
-    // Check if frame size is out of sync with video
+    // Resize frame & canvas if size changed
     if (frame.cols !== videoWidth || frame.rows !== videoHeight) {
       frame.delete();
       frame = new cv.Mat(videoHeight, videoWidth, cv.CV_8UC4);
-
-      // UPDATE CANVAS SIZE
-      const canvas = document.getElementById("canvasOutput");
       canvas.width = videoWidth;
       canvas.height = videoHeight;
     }
