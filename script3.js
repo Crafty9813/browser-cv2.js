@@ -25,11 +25,9 @@ document.getElementById("startButton").addEventListener("click", () => {
     let width = video.videoWidth;
     let height = video.videoHeight;
 
-    // Set default to 640 x 480 px
-    if (!width || !height) {
-      width = 640;
-      height = 480;
-    }
+    // Make canvas size adapt
+    canvas.width = width;
+    canvas.height = height;
 
     frame = new cv.Mat(height, width, cv.CV_8UC4);
     cap = new cv.VideoCapture(video);
