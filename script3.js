@@ -5,28 +5,37 @@ let video = document.getElementById("videoInput");
 let streaming = false;
 let frame, cap;
 
-function onReady() {
-  // Ask for camera access, mediaDevices = part of Media Capture and Streams API
+//Button testing...
+document.getElementById("startButton").addEventListener("click", () => {
+  //User webcam access request
   navigator.mediaDevices
     .getUserMedia({ video: true })
     .then((stream) => {
       video.srcObject = stream;
-      // CSS MAKES SURE TO NOT DISPLAY THIS INPUT VIDEO FEED
-      video.play();
-      streaming = true;
-
-      video.addEventListener("loadeddata", () => {
-        // Convert to opencv matrix
-        frame = new cv.Mat(video.videoHeight, video.videoWidth, cv.CV_8UC4);
-        cap = new cv.VideoCapture(video);
-
-        startVideoProcessing();
-      });
+      return video.play();
     })
     .catch((err) => {
       console.error("Camera error:", err);
     });
-}
+
+  // Wait for data like video width, height, etc. to load
+  video.onloadedmetadata = () => {
+    streaming = true;
+
+    let width = video.videoWidth;
+    let height = video.videoHeight;
+
+    // Set default to 640 x 480 px
+    if (!width || !height) {
+      width = 640;
+      height = 480;
+    }
+
+    frame = new cv.Mat(height, width, cv.CV_8UC4);
+    cap = new cv.VideoCapture(video);
+    startVideoProcessing();
+  };
+});
 
 function startVideoProcessing() {
   function processVideo() {

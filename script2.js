@@ -1,4 +1,5 @@
-// Mostly from the OpenCV.js documentation: https://docs.opencv.org/4.x/dd/d00/tutorial_js_video_display.html
+// Based from the OpenCV.js documentation:
+// https://docs.opencv.org/4.x/dd/d00/tutorial_js_video_display.html
 
 let video = document.getElementById("videoInput");
 let streaming = false;

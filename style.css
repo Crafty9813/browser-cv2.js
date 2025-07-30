@@ -7,6 +7,23 @@ body {
   border-radius: 10px;
 }
 
+#startButton {
+  display: flex;
+  margin: auto;
+
+  border-radius: 10px;
+
+  background-color: lightblue;
+}
+
+#startButton:hover {
+  cursor: grab;
+}
+
+#startButton:active {
+  background-color: lightsteelblue;
+}
+
 /* HIDE THE INPUT VIDEO FEED */
 #videoInput {
   display: none;
