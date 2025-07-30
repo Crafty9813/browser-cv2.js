@@ -20,6 +20,10 @@ document.getElementById("startButton").addEventListener("click", () => {
 
   // Wait for data like video width, height, etc. to load
   video.onloadedmetadata = () => {
+    let canvas = document.getElementById("canvasOutput");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
     streaming = true;
 
     let width = video.videoWidth;
@@ -42,6 +46,20 @@ function startVideoProcessing() {
     if (!streaming) {
       frame.delete();
       return;
+    }
+
+    const videoWidth = video.videoWidth;
+    const videoHeight = video.videoHeight;
+
+    // Check if frame size is out of sync with video
+    if (frame.cols !== videoWidth || frame.rows !== videoHeight) {
+      frame.delete();
+      frame = new cv.Mat(videoHeight, videoWidth, cv.CV_8UC4);
+
+      // UPDATE CANVAS SIZE
+      const canvas = document.getElementById("canvasOutput");
+      canvas.width = videoWidth;
+      canvas.height = videoHeight;
     }
 
     cap.read(frame);
