@@ -1,0 +1,13 @@
+body {
+  text-align: center;
+}
+
+#canvasOutput {
+  border: 4px solid gold;
+  border-radius: 10px;
+}
+
+/* HIDE THE INPUT VIDEO FEED */
+#videoInput {
+  display: none;
+}
