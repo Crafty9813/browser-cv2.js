@@ -5,6 +5,11 @@ let video = document.getElementById("videoInput");
 let streaming = false;
 let frame, cap;
 
+cv["onRuntimeInitialized"] = () => {
+  console.log("OpenCV ready");
+  document.getElementById("startButton").disabled = false;
+};
+
 //Button testing...
 document.getElementById("startButton").addEventListener("click", () => {
   //User webcam access request
