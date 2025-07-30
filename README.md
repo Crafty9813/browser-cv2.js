@@ -1,2 +1,2 @@
 # browser-cv2.js
-Using OpenCV.js to access webcam on a web page.
+Using OpenCV.js to access webcam on a web page. So far works perfectly on a laptop, but not really for phones...irdk whats wrong...
