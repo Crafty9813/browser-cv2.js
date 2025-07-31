@@ -3,7 +3,16 @@
 
 let video = document.getElementById("videoInput");
 let streaming = false;
-let frame, cap;
+let frame = null;
+let cap = null;
+
+document.getElementById("startButton").disabled = true; // Disable btn
+
+//USED IN INDEX.HTML- onload
+function onReady() {
+  console.log("OpenCV ready! :D");
+  document.getElementById("startButton").disabled = false; // Enable button if ocv ready
+}
 
 //Button testing...
 document.getElementById("startButton").addEventListener("click", () => {
