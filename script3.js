@@ -76,7 +76,20 @@ function startVideoProcessing() {
 
     cap.read(frame);
 
-    cv.imshow("canvasOutput", frame); // DISPLAY OUTPUT (PROCESSED) FEED
+    let gray = new cv.Mat();
+    let blurred = new cv.Mat();
+    let edges = new cv.Mat();
+
+    cv.cvtColor(frame, gray, cv.COLOR_RGBA2GRAY);
+    cv.GaussianBlur(gray, blurred, new cv.Size(5, 5), 0);
+    cv.Canny(blurred, edges, 20, 120);
+
+    cv.imshow("canvasOutput", edges); // DISPLAY OUTPUT (PROCESSED) FEED
+
+    //Frees up memory
+    gray.delete();
+    blurred.delete();
+    edges.delete();
 
     requestAnimationFrame(processVideo); // Updates frame to match screen refresh rate
   }
